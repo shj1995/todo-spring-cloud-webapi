@@ -1,0 +1,14 @@
+spring:
+  cloud:
+    nacos:
+      discovery:
+        server-addr: 127.0.0.1:8848
+  datasource:
+    driverClassName: com.mysql.jdbc.Driver
+    url: "jdbc:mysql://47.106.125.155:3306/todo?autoreconnect=true&useSSL=false"
+    password: "root"
+    username: "root"
+  jpa:
+    hibernate:
+      ddl-auto: create-drop
+    show-sql: true

@@ -1,0 +1,16 @@
+
+spring:
+  application:
+    name: todo-task-service
+  datasource:
+    driverClassName: com.mysql.jdbc.Driver
+    url: "jdbc:mysql://47.106.125.155:3306/todo?autoreconnect=true&useSSL=false"
+    password: "root"
+    username: "root"
+  cloud:
+    nacos:
+      discovery:
+        metadata:
+          name: 哈哈
+server:
+  port: 0

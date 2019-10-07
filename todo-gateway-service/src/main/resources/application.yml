@@ -1,0 +1,19 @@
+
+
+server:
+  port: 9600
+
+
+spring:
+  application:
+    name: todo-gateway-service
+  cloud:
+    gateway:
+      discovery:
+        locator:
+          enabled: true
+      loadbalancer:
+        use404: true
+
+
+

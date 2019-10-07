@@ -1,0 +1,8 @@
+
+
+spring:
+  application:
+    name: todo-usersystem-service
+
+server:
+  port: 0
