@@ -1,0 +1,5 @@
+spring:
+  application:
+    name: todo-authentication-service
+server:
+  port: 9999
