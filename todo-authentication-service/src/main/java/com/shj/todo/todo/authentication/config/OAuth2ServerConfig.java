@@ -27,28 +27,35 @@ public class OAuth2ServerConfig extends AuthorizationServerConfigurerAdapter {
     /**
      * 定义客户端信息
      * 。客户端信息有两种存储方式，基于内存，和jdbc，这里用内存
-     * @param clients
-     *      客户端配置
-     * @throws Exception
-     *      啥异常，我也不知道
+     * @param clients clients
+     * @throws Exception exception
      */
     @Override
     public void configure(ClientDetailsServiceConfigurer clients) throws Exception {
         clients.inMemory() // 使用in-memory存储
                 .withClient("client") // client_id
-                .secret("secret") // client_secret
-                .authorizedGrantTypes("authorization_code") // 该client允许的授权类型
-                .scopes("app") // 允许的授权范围
-                .redirectUris("http://www.baidu.com");
-//        clients.inMemory()
-//                .withClient("client")
-//                .secret("secret")
-//                .authorizedGrantTypes("implicit","refresh_token", "password", "authorization_code");
+                .secret(new BCryptPasswordEncoder().encode("secret")) // client_secret
+                .scopes("read", "write", "trust")
+                .authorizedGrantTypes("authorization_code", "implicit", "password", "client_credentials", "refresh_token")
+                .accessTokenValiditySeconds(3600)
+                .refreshTokenValiditySeconds(18000);
     }
     @Override
     public void configure(final AuthorizationServerSecurityConfigurer oauthServer) throws Exception {
         oauthServer.tokenKeyAccess("permitAll()")
-                .checkTokenAccess("isAuthenticated()");
+                .checkTokenAccess("isAuthenticated()")
+        .allowFormAuthenticationForClients();
+    }
+
+    @Autowired
+    @Qualifier("authenticationManagerBean")
+    private AuthenticationManager authenticationManager;
+    @Override
+    public void configure(AuthorizationServerEndpointsConfigurer endpoints) throws Exception {
+
+        endpoints.authenticationManager(authenticationManager)
+                .tokenStore(new JwtTokenStore(new JwtAccessTokenConverter()))
+                .accessTokenConverter(new JwtAccessTokenConverter());
     }
 
 }
