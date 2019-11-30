@@ -14,6 +14,32 @@ spring:
           enabled: true
       loadbalancer:
         use404: true
-
-
-
+#  security:
+#    oauth2:
+#      client:
+#        registration:
+#          gateway:
+#            provider: todo-authentication-service
+#            client-id: todo
+#            client-secret: todo
+#            authorization-grant-type: authorization_code
+#            redirect-uri-template: "{baseUrl}/login/oauth2/code/{registrationId}"
+#            scope: openid,profile,email,resource.read
+#        provider:
+#          todo-authentication-service:
+#            authorization-uri: http://localhost:8090/todo-authentication-service/oauth/authorize
+#            token-uri: http://todo-authentication-service:8090/uaa/oauth/token
+#            user-info-uri: http://todo-authentication-service:8090/todo-authentication-service/userinfo
+#            user-name-attribute: sub
+#            jwk-set-uri: http://uaa:8090/todo-authentication-service/token_keys
+security:
+  oauth2:
+    client:
+      clientId: todo
+      clientSecret: todo
+      accessTokenUri: http://localhost:9999/login/oauth/access_token
+      userAuthorizationUri: http://localhost:9999/login/oauth/authorize
+      clientAuthenticationScheme: form
+    resource:
+      userInfoUri:  http://localhost:9999/user
+      preferTokenInfo: false

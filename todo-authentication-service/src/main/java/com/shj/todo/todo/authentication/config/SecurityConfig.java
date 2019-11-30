@@ -20,28 +20,18 @@ import org.springframework.security.crypto.password.NoOpPasswordEncoder;
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Override
-    protected void configure(HttpSecurity http) throws Exception { // @formatter:off
-//        http.requestMatchers()
-//                .antMatchers("/login", "/oauth/authorize","/oauth/token")
-//                .and()
-//                .authorizeRequests()
-//                .anyRequest()
-//                .authenticated()
-//                .and()
-//                .formLogin()
-//                .permitAll()
-//                .and().csrf().disable();
+    protected void configure(HttpSecurity http) throws Exception {
         http.authorizeRequests()
                 .antMatchers(HttpMethod.OPTIONS).permitAll()
                 .antMatchers("/login").permitAll()
-//                .antMatchers("/oauth/authorize").permitAll()
+                .antMatchers("/oauth/authorize").permitAll()
                 .antMatchers("/oauth/token").permitAll()
                 .anyRequest().authenticated()
                 .and().sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
                 .and().formLogin().permitAll()
                 .and().logout().permitAll()
                 .and().csrf().disable();
-    } // @formatter:on
+    }
 
     @Override
     @Bean
@@ -49,13 +39,13 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         return super.authenticationManagerBean();
     }
     @Override
-    protected void configure(AuthenticationManagerBuilder auth) throws Exception { // @formatter:off
+    protected void configure(AuthenticationManagerBuilder auth) throws Exception {
         auth.inMemoryAuthentication()
                 .withUser("admin")
                 .password(passwordEncoder().encode("123"))
                 .roles("USER")
         ;
-    } // @formatter:on
+    }
 
     @Bean
     public BCryptPasswordEncoder passwordEncoder(){
